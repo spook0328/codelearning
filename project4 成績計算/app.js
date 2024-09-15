@@ -13,7 +13,7 @@ time_line
   .fromTo(hero, 1, { height: "0%" }, { height: "100%", ease: Power2.easeInOut })
   .fromTo(
     hero,
-    1.2,3
+    1.2,
     { width: "80%" },
     { width: "100%", ease: Power2.easeInOut }
   )
