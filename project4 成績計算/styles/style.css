@@ -48,7 +48,7 @@ body section.animation-wrapper section.animation .hero img {
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 body section.animation-wrapper .slider {
   position: absolute;
@@ -154,6 +154,7 @@ body main section.main-part div.result h2#result-gpa {
     transform: scale(1);
   }
 }
+
 @keyframes scaleDown {
   from {
     transform: scale(1);
@@ -162,6 +163,7 @@ body main section.main-part div.result h2#result-gpa {
     transform: scale(0);
   }
 }
+
 @keyframes border_color {
   0% {
     border-color: red;
@@ -172,4 +174,4 @@ body main section.main-part div.result h2#result-gpa {
   66% {
     border-color: yellow;
   }
-}/*# sourceMappingURL=style.css.map */
+} /*# sourceMappingURL=style.css.map */
