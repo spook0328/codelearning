@@ -1,34 +1,35 @@
-// let hero = document.querySelector(".hero");
-// let slider = document.querySelector(".slider");
-// let animation = document.querySelector("section.animation-wrapper");
+let hero = document.querySelector(".hero");
+let slider = document.querySelector(".slider");
+let animation = document.querySelector("section.animation-wrapper");
 
-// const time_line = new TimelineMax();
+const time_line = new TimelineMax();
 
-// //parameter1 是要控制的對象
-// //parameter2 是duration
-// //parameter3 是要控制對象的原始狀態
-// //parameter4 是要控制對象的動畫結束後狀態
-// //parameter5 是否要提早開始運行
-// time_line
-//   .fromTo(hero, 1, { height: "0%" }, { height: "100%", ease: Power2.easeInOut })
-//   .fromTo(
-//     hero,
-//     1.2,
-//     { width: "80%" },
-//     { width: "100%", ease: Power2.easeInOut }
-//   )
-//   .fromTo(
-//     slider,
-//     1,
-//     { x: "-100%" },
-//     { x: "0%", ease: Power2.easeInOut },
-//     "-=1.2"
-//   )
-//   .fromTo(animation, 0.3, { opacity: 1 }, { opacity: 0 });
-// //設定計時器，時機到時運行function
-// setTimeout(() => {
-//   animation.style.pointerEvents = "none";
-// }, 2500);
+//parameter1 是要控制的對象
+//parameter2 是duration
+//parameter3 是要控制對象的原始狀態
+//parameter4 是要控制對象的動畫結束後狀態
+//parameter5 是否要提早開始運行
+time_line
+  .fromTo(hero, 1, { height: "0%" }, { height: "100%", ease: Power2.easeInOut })
+  .fromTo(
+    hero,
+    1.2,
+    { width: "80%" },
+    { width: "100%", ease: Power2.easeInOut }
+  )
+  .fromTo(
+    slider,
+    1,
+    { x: "-100%" },
+    { x: "0%", ease: Power2.easeInOut },
+    "-=1.2"
+  )
+  .fromTo(animation, 0.3, { opacity: 1 }, { opacity: 0 });
+
+//設定計時器，時機到時運行function
+setTimeout(() => {
+  animation.style.pointerEvents = "none";
+}, 2500);
 
 // 讓整個網站的ENTER KEY都無法使用
 window.addEventListener("keypress", (e) => {
@@ -61,6 +62,7 @@ credits.forEach((credit) => {
     setGPA;
   });
 });
+
 //變色
 function changeColor(target) {
   if (target.value == "A" || target.value == "A-") {
@@ -158,7 +160,7 @@ let addButton = document.querySelector(".plus-btn");
 addButton.addEventListener("click", () => {
   let newForm = document.createElement("form");
   let newDiv = document.createElement("div");
-  newDiv.classList.add("grade");
+  newDiv.classList.add("grader");
 
   //製作前三個form
   let newInput1 = document.createElement("input");
@@ -261,6 +263,7 @@ addButton.addEventListener("click", () => {
   newItag.classList.add("fas");
   newItag.classList.add("fa-trash");
   newButton.appendChild(newItag);
+
   //新增垃圾統不會重整頁面
   newButton.addEventListener("click", (e) => {
     e.preventDefault();
@@ -289,13 +292,10 @@ addButton.addEventListener("click", () => {
 let allTrash = document.querySelectorAll(".trash-button");
 allTrash.forEach((trash) => {
   trash.addEventListener("click", (e) => {
-    e.target.parentElement.parentElement.classList.add("remove");
-    //Js刪除會馬上呈現，所以不能這樣用，動畫會不見
+    e.target.parentElement.parentElement.classList.add("remove"); //Js刪除會馬上呈現，所以不能這樣用，動畫會不見
     //e.target.parentElement.parentElement.remove();
   });
-});
-
-//因此額外寫forEach等動畫結束後執行，remove
+}); //因此額外寫forEach等動畫結束後執行，remove
 allTrash.forEach((trash) => {
   let form = trash.parentElement.parentElement;
   form.addEventListener("transitionend", (e) => {
@@ -325,14 +325,12 @@ function handleSorting(direction) {
     let class_grade = graders[i].children[3].value; //是指class grades
 
     if (
+      //離散數學
       !(
-        //離散數學
-        (
-          class_name == "" &&
-          class_number == "" &&
-          class_credit == "" &&
-          class_grade == ""
-        )
+        class_name == "" &&
+        class_number == "" &&
+        class_credit == "" &&
+        class_grade == ""
       )
     ) {
       let class_object = {
@@ -410,6 +408,41 @@ function handleSorting(direction) {
   for (let i = 0; i < graders.length; i++) {
     graders[i].children[3].value = objectArray[i].class_grade;
   }
+
+  // select事件監聽，改GPA
+  allSelects = document.querySelectorAll("select");
+  allSelects.forEach((select) => {
+    changeColor(select);
+    select.addEventListener("change", (e) => {
+      setGPA();
+      changeColor(e.target);
+    });
+  });
+
+  //credit事件監聽，改GPA
+  let allCredits = document.querySelectorAll(".class-credit");
+  allCredits.forEach((credits) => {
+    credit.addEventListener("change", () => {
+      setGPA;
+    });
+  });
+
+  //垃圾桶
+  let allTrash = document.querySelectorAll(".trash-button");
+  allTrash.forEach((trash) => {
+    trash.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.target.parentElement.parentElement.style.animation = //點垃圾桶的動畫
+        "scaleDown 0.5s ease forwards";
+      e.target.parentElement.parentElement.addEventListener(
+        "animationend", //等待垃圾桶動畫後
+        (e) => {
+          e.target.remove();
+          setGPA();
+        }
+      );
+    });
+  });
 }
 
 function merge(a1, a2) {
