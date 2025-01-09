@@ -30,8 +30,22 @@ snake[3] = {
   y: 0,
 };
 
+//控制方向
+window.addEventListener("keydown", changeDirection);
 //初始前進方向
 let d = "Right";
+//e=event
+function changeDirection(e) {
+  if (e.key == "ArrowRight" && d != "Left") {
+    d = "Right";
+  } else if (e.key == "ArrowDown" && d != "Up") {
+    d = "Down";
+  } else if (e.key == "ArrowLeft" && d != "Right") {
+    d = "Left";
+  } else if (e.key == "ArrowUp" && d != "Down") {
+    d = "Up";
+  }
+}
 
 //蛇,背景的顏色和呈現
 function draw() {
