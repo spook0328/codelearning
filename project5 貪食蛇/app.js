@@ -30,6 +30,19 @@ snake[3] = {
   y: 0,
 };
 
+//果實
+class Fruit {
+  constructor() {
+    this.x = Math.floor(Math.random() * column) * unit;
+    this.y = Math.floor(Math.random() * row) * unit;
+  }
+
+  drawFruit() {
+    ctx.fillStyle = "yellow";
+    ctx.fillRect(this.x, this.y, unit, unit);
+  }
+}
+
 //控制方向
 window.addEventListener("keydown", changeDirection);
 //初始前進方向
@@ -60,6 +73,20 @@ function draw() {
       ctx.fillStyle = "lightseagreen"; //身體顏色
     }
     ctx.strokeStyle = "white"; //蛇的外框顏色
+
+    //穿牆功能，寫在這需要思考一下，在這是因為for loop 可以一直確認
+    if (snake[i].x >= canvas.width) {
+      snake[i].x = 0;
+    }
+    if (snake[i].x < 0) {
+      snake[i].x = canvas.width - unit;
+    }
+    if (snake[i].y >= canvas.height) {
+      snake[i].y = 0;
+    }
+    if (snake[i].y < 0) {
+      snake[i].y = canvas.height - unit;
+    }
 
     // fillRect,strokeRect 參數(x,y,width,height)
     ctx.fillRect(snake[i].x, snake[i].y, unit, unit); //畫實心長方形
